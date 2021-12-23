@@ -4,10 +4,10 @@ var generateBtn = document.querySelector("#generate");
 // const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 // const numbers = "0123456789";
 // const symbols = "!@#$%^&*_-+=";
-uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
-lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "_", "-", "+", "="]
+var uppercase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+var lowercase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+var symbols = ["!", "@", "#", "$", "%", "^", "&", "*", "_", "-", "+", "="]
 var desiredInputs = []
 var result = '';
 
@@ -16,70 +16,78 @@ var result = '';
 function generatePassword(passwordLength, inclLowercase, inclUppercase, inclNumbers, inclSpecial) {
 
 //Prompts for desired criteria
+//TODO: specify length to be b/t 8 and 128 (if statement after prompt; call again if incorrect)
   var passwordLength = prompt("Please specify the desired length for your password, between 8-128.")
 
-  var inclLowercase = confirm("Press 'confirm' if you'd like your password to include lowercase letters.")
+  var inclLowercase = confirm("Press 'OK' if you'd like your password to include lowercase letters.")
 
-  var inclUppercase = confirm("Press 'confirm' if you'd like your password to include uppercase letters.")
+  var inclUppercase = confirm("Press 'OK' if you'd like your password to include uppercase letters.")
 
-  var inclNumbers = confirm("Press 'confirm' if you'd like your password to include numbers.")
+  var inclNumbers = confirm("Press 'OK' if you'd like your password to include numbers.")
 
-  var inclSpecial = confirm("Press 'confirm' if you'd like your password to include special characters.")  
+  var inclSpecial = confirm("Press 'OK' if you'd like your password to include special characters.")  
 
 //Concatenating desired criteria into one array  
     if (inclLowercase === true) {
-      var newArray = desiredInputs.concat(lowercase);
+      desiredInputs = desiredInputs.concat(lowercase);
       // for (let i = 0; i < lowercase.length; i++) {
       //   result += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
       // }
     }
-    console.log(newArray)
+    console.log(desiredInputs)
 
     if (inclUppercase === true) {
-      newArray.concat(uppercase);
+      desiredInputs = desiredInputs.concat(uppercase);
       // for (let i = 0; i < uppercase.length; i++) {
       //   result += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
       // }
     } 
-    console.log(newArray)
+    console.log(desiredInputs)
 
     if (inclNumbers === true) {
-      newArray.concat(numbers);
+      desiredInputs = desiredInputs.concat(numbers);
       // for (let i = 0; i < numbers.length; i++) {
       //   result += numbers.charAt(Math.floor(Math.random() * numbers.length));
       // }
     } 
 
     if (inclSpecial === true) {
-      newArray.concat(symbols);
+      desiredInputs = desiredInputs.concat(symbols);
       // for (let i = 0; i < symbols.length; i++) {
       //   result += symbols.charAt(Math.floor(Math.random() * symbols.length));
       // }
     } 
 
-    console.log(newArray);
+    console.log(desiredInputs);
   // return result;
 
+  //declare pw array
+  var shuffledArray = []
 
-  //TODO: Applying the Fisher-Yates shuffle method to the array containing user's desired inputs.
-  function shuffle(desiredInputs) {
-    let currentIndex = desiredInputs.length,  randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [desiredInputs[currentIndex], desiredInputs[randomIndex]] = [
-        desiredInputs[randomIndex], desiredInputs[currentIndex]];
-    }
-  
-    return array;
-  }
+  //write loop for pw length
+for (let i = 0; i < passwordLength; i++) {
+  //generate
+    var randomIndex = Math.floor(Math.random() * desiredInputs.length);
+    //using random index to select randomly form desiredInputs array
+    var shuffledChar = desiredInputs[randomIndex];
+    shuffledArray.push(shuffledChar);
 }
+
+  var pwOutput = shuffledArray.join('');
+
+return pwOutput;
+
+//declare pw array
+//write loop that runs for pw length
+//each iteration generate a random index;
+//use that random index to select an item from the desiredInputs array
+//push that into into a pw array
+//convert array to string
+//return pw string
+
+
+}
+
 
 //TODO: create array from user's desired inputs
 //TODO: shuffle that array
